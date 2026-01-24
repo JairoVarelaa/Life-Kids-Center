@@ -31,8 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Formulario
     const form = document.getElementById('contact-form');
+    // Dentro de tu evento 'submit', antes de enviar:
+    
     if (form) {
+        
         form.addEventListener('submit', async function(e) {
+            
             e.preventDefault();
 
             // 1. ACTIVAR MODO "CARGANDO" INMEDIATAMENTE
@@ -42,12 +46,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Recopilar datos
             const formData = new FormData(form);
-            const nombre = document.getElementById('nombre').value;
+            const nombre = limpiarInput(document.getElementById('nombre').value);
             const correo = document.getElementById('correo').value;
-            const mensaje = document.getElementById('mensaje').value;
+            const mensaje = limpiarInput(document.getElementById('mensaje').value);
 
             // URL de Formspree
-            const formspreeURL = "https://formspree.io/f/mjgylzav"; 
+            const formspreeURL = "https://formspree.io/f/mjgylzav";
 
             try {
                 const response = await fetch(formspreeURL, {
@@ -85,5 +89,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert("Hubo un error de conexión. Por favor revisa tu internet e intenta nuevamente.");
             }
         });
+    }
+    // Función para limpiar texto de caracteres extraños
+    function limpiarInput(texto) {
+        const div = document.createElement('div');
+        div.textContent = texto;
+        return div.innerHTML;
     }
 });
