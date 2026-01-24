@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Gracias! | Jardín Life Kids Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* Estilos específicos para alinear con el tema Verde Reggio */
+        body {
+            background-color: var(--verde-reggio); /* El mismo verde del formulario */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .thanks-card {
+            background: var(--blanco);
+            padding: 60px 40px;
+            border-radius: 40px; /* Bordes muy redondeados y amables */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Detalle decorativo superior */
+        .thanks-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 10px;
+            background: linear-gradient(90deg, var(--primario), var(--secundario));
+        }
+
+        .thanks-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        h1 {
+            color: var(--verde-reggio);
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: var(--texto);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .quote-box {
+            background-color: #FDFCF0;
+            padding: 20px;
+            border-radius: 15px;
+            font-style: italic;
+            color: #555;
+            margin-bottom: 40px;
+            border-left: 4px solid var(--primario);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="thanks-card">
+        <span class="thanks-icon">🌿</span>
+        
+        <h1>¡Mensaje Recibido!</h1>
+        
+        <p>Gracias por querer ser parte de nuestra comunidad en la Calle 170. Hemos recibido tus datos correctamente.</p>
+
+        <div class="quote-box">
+            "El niño está hecho de cien. El niño tiene cien lenguajes, cien manos, cien pensamientos..." 
+            <br><strong>— Loris Malaguzzi</strong>
+        </div>
+
+        <p style="font-size: 0.95rem;">Nos pondremos en contacto contigo en las próximas 24 horas.</p>
+
+        <a href="index.html" class="cta-button" style="display: inline-flex; justify-content: center;">Volver al Inicio</a>
+    </div>
+
+</body>
+</html>

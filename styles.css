@@ -1,0 +1,595 @@
+:root {
+    --primario: #FF85A1;
+    --secundario: #64C4ED;
+    --fondo: #FDFCF0;
+    --texto: #2D3436;
+    /* Este es el verde aproximado gr-098 (Salvia/Musgo suave) */
+    --verde-reggio: #96B896; 
+    --verde-texto: #FDFCF0; /* Color claro para que el texto resalte sobre el verde */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--fondo);
+    color: var(--texto);
+    overflow-x: hidden;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5%;
+    
+    /* 1. Cambiamos la forma de escalar */
+    /*background-image: url('img/f-navbar.png');*/ 
+    
+    /* 'auto 100%' hace que la imagen se ajuste a la altura de la barra 
+       sin importar qué tan ancha sea, eliminando el zoom excesivo */
+    background-size: auto 100%; 
+    
+    /* 2. Evitamos que se estire horizontalmente */
+    background-repeat: repeat-x; /* Se repite suavemente hacia los lados si es necesario */
+    background-position: center;
+    
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    min-height: 80px;
+}
+/* 3. CAPA DE PROTECCIÓN (Opcional) */
+/* Si tu imagen es un poco oscura o colorida, añade este "velo" blanco
+   para que el texto del menú se lea perfectamente */
+   .navbar::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.4); /* Capa blanca al 40% de transparencia */
+    z-index: -1; /* Se queda detrás del logo y los links */
+}
+
+/* Ajuste de los links para que resalten sobre el fondo */
+.nav-links a {
+    text-decoration: none;
+    color: var(--texto);
+    font-weight: 700;
+    text-shadow: 0px 0px 5px rgba(255,255,255,0.8); /* Brillo blanco suave detrás de las letras */
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--primario);
+}
+.logo a { display: flex; align-items: center; text-decoration: none; gap: 10px; }
+.logo-img { height: 60px; width: auto; }
+.logo-text { font-weight: 700; color: var(--primario); font-size: 1.2rem; }
+.nav-links { display: flex; list-style: none; gap: 15px; }
+.nav-links a { text-decoration: none; color: var(--texto); font-weight: 600; padding: 10px; }
+
+/* SECCIONES FLEXIBLES */
+section { padding: 80px 5%; min-height: auto; width: 100%; }
+.section-intro { text-align: center; margin-bottom: 40px; }
+
+/* HERO */
+.hero {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white; /* Cambiamos a blanco para que resalte sobre el video */
+    overflow: hidden;
+}
+
+.hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Clave: el video llena el espacio sin deformarse */
+    z-index: -2;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Capa oscura al 30% para legibilidad */
+    z-index: -1;
+}
+
+.hero-content {
+    z-index: 1;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.hero h1 {
+    color: white; /* En esta sección el rosa podría perderse, el blanco es más seguro */
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+}
+
+.hero p {
+    color: white;
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+}
+
+/* RITMOS */
+.rhythm-card { display: flex; align-items: center; gap: 40px; margin-bottom: 60px; }
+.rhythm-card.reverse { flex-direction: row-reverse; }
+.rhythm-image { flex: 1; border-radius: 30px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+.rhythm-image img { width: 100%; height: auto; display: block; }
+.rhythm-content { flex: 1; }
+
+/* CARRUSEL */
+.carousel-container { position: relative; max-width: 1000px; margin: 0 auto; overflow: visible; }
+.carousel-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 20px 0;
+    scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+.carousel-item {
+    flex: 0 0 85%;
+    scroll-snap-align: center;
+    background: white;
+    border-radius: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    
+    /* CONSEJO: La transición debe ser lenta para que se sienta suave */
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+    z-index: 1;
+}
+.carousel-item:hover {
+    transform: scale(1.08) rotate(1deg); /* Crece un 8% y gira un poco */
+    z-index: 10; /* Se pone por encima de las demás */
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15); /* Sombra más profunda */
+}
+/* 2. EFECTO AVANZADO: Opacar las demás cuando el mouse entra al carrusel */
+/* Esto hace que el carril completo pierda brillo, excepto la que tiene el mouse */
+.carousel-track:hover .carousel-item:not(:hover) {
+    opacity: 0.6;
+    filter: blur(1px) grayscale(10%); /* Un ligero desenfoque artístico */
+}
+.carousel-item img {
+    width: 100%;
+    /* CONSEJO: Esta proporción 4/3 es ideal para fotos de niños */
+    aspect-ratio: 4 / 3; 
+    object-fit: cover; /* Esto evita que la foto se estire, la recorta inteligentemente */
+    border-radius: 30px 30px 0 0; /* Solo redondea las esquinas de arriba */
+}
+.carousel-item figcaption { padding: 20px; text-align: center; }
+/* AJUSTE PARA PANTALLAS GRANDES (PC) */
+@media (min-width: 1024px) {
+    .carousel-item {
+        flex: 0 0 30%; /* En PC se verán 3 imágenes al tiempo */
+    }
+}
+/* AJUSTE PARA TABLETS */
+@media (min-width: 600px) and (max-width: 1023px) {
+    .carousel-item {
+        flex: 0 0 45%; /* En tablets se verán 2 imágenes al tiempo */
+    }
+}
+.carousel-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: white; border: none; width: 45px; height: 45px;
+    border-radius: 50%; cursor: pointer; z-index: 10;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); color: var(--primario); font-size: 20px;
+}
+.contact-section {
+    background-color: var(--verde-reggio); /* Tu color gr-098 */
+    padding: 80px 5%;
+    display: flex;
+    justify-content: center;
+    border-radius: 50px 50px 0 0; /* Curva superior para suavizar la transición */
+}
+
+.contact-container {
+    background: var(--blanco);
+    padding: 40px;
+    border-radius: 30px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    max-width: 800px;
+    width: 100%;
+}
+
+.contact-section h2, .contact-section p {
+    color: var(--verde-texto); /* Texto claro sobre el fondo verde */
+    text-align: center;
+    margin-bottom: 20px;
+}
+/* Checkbox de políticas */
+.legal-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: var(--texto); /* O usa #333 si el fondo es claro */
+    text-align: left;
+}
+
+.legal-check input {
+    width: 20px; /* Tamaño del cuadrito */
+    height: 20px;
+    margin: 0; /* Quitar márgenes extra */
+    accent-color: var(--verde-reggio); /* El check será verde cuando se marque */
+    cursor: pointer;
+}
+.legal-check a {
+    color: var(--secundario);
+    text-decoration: underline;
+    font-weight: bold;
+}
+.map-section {
+    padding: 40px 5%;
+    display: flex;
+    justify-content: center;
+    background-color: var(--verde-reggio); /* Fondo crema suave para separar del verde */
+}
+
+.map-card {
+    background: var(--fondo);
+    width: 100%;
+    max-width: 900px; /* Tamaño controlado para no ser invasivo */
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.map-info {
+    padding: 20px 30px;
+    background-color: var(--blanco);
+    border-bottom: 1px solid #eee;
+}
+
+.map-info h4 {
+    color: var(--verde-reggio);
+    margin-bottom: 5px;
+}
+
+.map-canvas {
+    line-height: 0; /* Elimina espacios extra debajo del iframe */
+}
+
+/* Ajuste para móviles */
+@media (max-width: 768px) {
+    .map-card {
+        max-width: 100%;
+    }
+}
+.footer-jardin {
+    background-color: var(--verde-reggio);
+    color: var(--verde-texto);
+    padding: 60px 5% 20px;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-column h3, .footer-column h4 {
+    margin-bottom: 20px;
+    color: var(--blanco);
+}
+
+.footer-column p {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.social-icon {
+    color: var(--blanco);
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: translateY(-5px);
+    color: var(--secundario);
+}
+
+/* Línea de Derechos Reservados */
+.footer-bottom {
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+.legal-links a {
+    color: var(--verde-texto);
+    text-decoration: none;
+}
+
+.legal-links a:hover {
+    text-decoration: underline;
+}
+.prev { left: -20px; } .next { right: -20px; }
+/* BOTONES Y FORM */
+.cta-button, .btn-primary, .btn-submit {
+    padding: 12px 25px; border-radius: 50px; background: var(--secundario);
+    color: white; text-decoration: none; font-weight: 700; border: none; cursor: pointer;
+}
+input, textarea { width: 100%; padding: 15px; font-size: 16px; border-radius: 15px; border: 1px solid #ddd; margin-bottom: 15px; }
+/* --- EFECTOS INTERACTIVOS DE BOTONES (HOVER & TOUCH) --- */
+
+/* 1. Base: Aseguramos que la transición sea suave siempre */
+.cta-button, .btn-primary, .btn-submit, .btn-back {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Curva de animación suave */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombra inicial sutil */
+    position: relative;
+    overflow: hidden; /* Para que nada se salga del botón */
+}
+
+/* 2. EFECTO PC (HOVER): El botón "flota" hacia arriba */
+/* Usamos @media (hover: hover) para que este efecto SOLO pase si hay mouse.
+   Así evitamos que en el celular el botón se quede "pegado" con el color cambiado. */
+@media (hover: hover) {
+    .cta-button:hover, .btn-primary:hover, .btn-submit:hover, .btn-back:hover {
+        transform: translateY(-3px) scale(1.02); /* Sube 3px y crece un poquito */
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15); /* La sombra crece (da profundidad) */
+        filter: brightness(1.1); /* Se vuelve un 10% más brillante */
+        cursor: pointer;
+    }
+}
+
+/* 3. EFECTO MÓVIL Y CLIC (ACTIVE): El botón se "hunde" */
+/* Esto funciona cuando el usuario hace clic o pone su dedo sobre el botón */
+.cta-button:active, .btn-primary:active, .btn-submit:active, .btn-back:active {
+    transform: translateY(1px) scale(0.98); /* Baja y se encoge ligeramente */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* La sombra se reduce (efecto de presión) */
+    filter: brightness(0.95); /* Se oscurece un pelín */
+}
+/* --- INTERACCIÓN SUAVE EN FORMULARIO (INPUTS) --- */
+/* --- FORMULARIO CON ETIQUETAS ANIMADAS --- */
+
+.field-wrapper {
+    position: relative;
+    margin-bottom: 25px; /* Espacio para que la etiqueta suba sin chocar */
+    width: 100%;
+}
+
+/* 1. Estilo base del Input/Textarea (sin bordes visibles arriba/lados para estilo minimalista) */
+.field-wrapper input, 
+.field-wrapper textarea {
+    width: 100%;
+    padding: 15px 10px;
+    background: #f9f9f9;
+    border: none;
+    border-radius: 10px 10px 0 0; /* Solo curvas arriba */
+    border-bottom: 2px solid #ddd; /* Solo línea abajo */
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+    color: var(--texto);
+}
+
+/* 2. Estilo de la Etiqueta (El texto que se mueve) */
+.field-wrapper label {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%); /* Centrado verticalmente */
+    color: #999;
+    font-size: 16px;
+    pointer-events: none; /* Permite hacer clic "a través" del texto */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    
+    /* ANIMACIÓN DE ENTRADA (Móvil y Scroll) */
+    opacity: 0;
+    animation: slideInLabel 0.8s forwards; /* Aparece suavemente */
+    animation-delay: 0.5s; /* Espera un poquito para que se note */
+}
+
+/* Ajuste especial para el Textarea (la etiqueta empieza arriba) */
+.field-wrapper textarea ~ label {
+    top: 20px;
+}
+
+/* 3. EFECTO HOVER (Mouse encima): El texto se despierta */
+.field-wrapper:hover label {
+    color: var(--secundario); /* Se pone azulito */
+    transform: translateY(-50%) scale(1.05); /* Crece un poquito */
+}
+
+/* 4. EFECTO FOCUS (Escribiendo) o VALID (Ya tiene texto) */
+/* El texto sube y se queda arriba */
+.field-wrapper input:focus ~ label,
+.field-wrapper input:valid ~ label,
+.field-wrapper textarea:focus ~ label,
+.field-wrapper textarea:valid ~ label {
+    top: -10px; /* Sube fuera del campo */
+    left: 0;
+    font-size: 12px; /* Se vuelve pequeño */
+    color: var(--fondo); /* Se vuelve rosa */
+    font-weight: 700;
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+/* 5. Línea animada inferior (Decoración Extra) */
+.linea-animada {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--fondo);
+    transition: width 0.4s ease;
+}
+
+.field-wrapper input:focus ~ .linea-animada,
+.field-wrapper textarea:focus ~ .linea-animada {
+    width: 100%; /* La línea se dibuja de izquierda a derecha */
+}
+
+/* Animación de entrada para el texto (Keyframes) */
+@keyframes slideInLabel {
+    from {
+        opacity: 0;
+        transform: translateY(20px); /* Viene desde abajo */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%); /* Llega al centro */
+    }
+}
+/* 1. Configuración Base para la suavidad */
+input, textarea {
+    /* Mantenemos tus estilos anteriores... */
+    border: 1px solid #e0e0e0; 
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Animación elástica suave */
+    background-color: #f9f9f9; /* Fondo gris muy clarito inicial */
+}
+
+/* 2. HOVER: Cuando el mouse "acaricia" el campo */
+input:hover, textarea:hover {
+    background-color: #ffffff; /* Se vuelve blanco puro */
+    border-color: var(--secundario); /* El borde se pinta del azul suave */
+    box-shadow: 0 8px 15px rgba(0,0,0,0.05); /* Una sombra muy sutil que lo levanta */
+    transform: translateY(-2px); /* Se eleva 2 píxeles imperceptiblemente */
+}
+
+/* 3. FOCUS: Cuando el usuario hace clic para escribir */
+input:focus, textarea:focus {
+    background-color: #ffffff;
+    border-color: var(--primario); /* Se pinta rosa (amor) al escribir */
+    outline: none; /* Quitamos la línea negra fea por defecto */
+    transform: translateY(0); /* Vuelve a su sitio */
+    
+    /* Un "resplandor" suave alrededor para guiar la vista */
+    box-shadow: 0 0 0 4px rgba(255, 133, 161, 0.15); 
+}
+/* --- PANTALLA DE CARGA (LOADER) --- */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.85); /* Fondo blanco semi-transparente */
+    backdrop-filter: blur(5px); /* ESTO crea el efecto borroso en el fondo */
+    z-index: 9999; /* Para que esté encima de TODO */
+    display: none; /* Oculto por defecto */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Clase para activarlo con JS */
+.loading-overlay.active {
+    display: flex;
+}
+
+.loader-content h3 {
+    color: var(--verde-reggio);
+    margin-top: 20px;
+    font-size: 1.5rem;
+}
+
+.loader-content p {
+    color: var(--texto);
+    font-size: 1rem;
+}
+
+/* Animación del círculo giratorio */
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3; /* Gris claro */
+    border-top: 5px solid var(--primario); /* Rosa girando */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Estado del botón deshabilitado (opcional visual) */
+.btn-submit:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none !important; /* Quita el efecto hover */
+}
+/* Estilo del enlace dentro del checkbox */
+.legal-check a {
+    color: var(--secundario); /* El azul cielo (#64C4ED) se ve amable */
+    text-decoration: underline;
+    font-weight: 700; /* Un poco más gordito para que sea fácil de clicar */
+    transition: color 0.3s ease;
+    position: relative;
+    z-index: 2; /* Asegura que el clic funcione bien sobre la etiqueta */
+}
+
+.legal-check a:hover {
+    color: var(--primario); /* Cambia a rosa al pasar el mouse */
+    text-decoration: none; /* Quita la línea al pasar el mouse para un look limpio */
+}
+/* TRANSICIONES */
+.reveal { opacity: 0; transform: translateY(30px); transition: 1s all ease; }
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+.whatsapp-btn {
+    position: fixed; bottom: 20px; right: 20px; background: white; padding: 10px 20px;
+    border-radius: 50px; display: flex; align-items: center; gap: 10px; text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 2000;
+}
+
+@media (max-width: 768px) {
+    .nav-links { display: none; }
+    .rhythm-card, .rhythm-card.reverse { flex-direction: column; text-align: center; }
+    .carousel-btn { display: none; } /* En móvil se usa el dedo */
+}
+/* AJUSTE ESPECÍFICO PARA MÓVIL */
+@media (max-width: 480px) {
+    /* 1. Reducimos el espacio entre el logo (cuadritos) y el texto */
+    .logo a {
+        gap: 5px; /* Antes estaba en 10px, lo acercamos */
+        justify-content: flex-start; /* Asegura que se pegue a la izquierda */
+    }
+
+    /* 2. Ajustamos el tamaño del texto para que no se vea apretado */
+    .logo-text {
+        font-size: 1rem; /* Un poco más pequeño que en PC */
+        white-space: nowrap; /* Evita que el texto se parta en dos líneas */
+    }
+
+    /* 3. (Opcional) Si quieres mover TODO el bloque más a la izquierda */
+    .navbar {
+        padding-left: 15px; /* Reduce un poco el relleno izquierdo de la barra */
+    }
+}
