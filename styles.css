@@ -564,11 +564,23 @@ input:focus, textarea:focus {
 /* TRANSICIONES */
 .reveal { opacity: 0; transform: translateY(30px); transition: 1s all ease; }
 .reveal.active { opacity: 1; transform: translateY(0); }
-
+/*BOTON WHATSAPP*/
 .whatsapp-btn {
     position: fixed; bottom: 20px; right: 20px; background: white; padding: 10px 20px;
     border-radius: 50px; display: flex; align-items: center; gap: 10px; text-decoration: none;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 2000;
+}
+/* --- ESTILOS PARA EL ICONO DE WHATSAPP --- */
+.whatsapp-icon {
+    width: 24px;   /* Tamaño ideal para el icono */
+    height: 24px;
+    fill: #25D366; /* Color verde oficial de WhatsApp */
+    transition: transform 0.3s ease; /* Pequeña animación por si quieres darle efectos */
+}
+
+/* Opcional: Un toque extra de interactividad */
+.whatsapp-btn:hover .whatsapp-icon {
+    transform: scale(1.1); /* El icono se agranda un 10% sutilmente al pasar el mouse */
 }
 
 @media (max-width: 768px) {
