@@ -96,4 +96,17 @@ document.addEventListener('DOMContentLoaded', () => {
         div.textContent = texto;
         return div.innerHTML;
     }
+    // Lógica del Botón "Volver arriba"
+    const btnTop = document.getElementById('btn-top');
+    
+    if (btnTop) {
+        window.addEventListener('scroll', () => {
+            // Si el usuario baja más de 300 pixeles, mostramos el botón
+            if (window.scrollY > 300) {
+                btnTop.classList.add('show');
+            } else {
+                btnTop.classList.remove('show');
+            }
+        });
+    }
 });

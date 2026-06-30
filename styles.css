@@ -9,7 +9,9 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
+html{
+    scroll-behavior: smooth;
+}
 body {
     font-family: 'Nunito', sans-serif;
     background-color: var(--fondo);
@@ -591,5 +593,39 @@ input:focus, textarea:focus {
     /* 3. (Opcional) Si quieres mover TODO el bloque más a la izquierda */
     .navbar {
         padding-left: 15px; /* Reduce un poco el relleno izquierdo de la barra */
+    }
+}
+/* --- BOTÓN VOLVER ARRIBA --- */
+.back-to-top {
+    position: fixed;
+    bottom: 80px; /* Un poco más arriba del WhatsApp (que está a 20px) */
+    right: 20px;
+    background-color: var(--blanco, #FFFFFF); /* Fondo blanco limpio */
+    color: var(--verde-reggio); /* Icono verde */
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    opacity: 0; /* Oculto por defecto */
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1500;
+}
+
+.back-to-top.show {
+    opacity: 1; /* Se muestra al hacer scroll */
+    visibility: visible;
+}
+
+/* Efecto al pasar el mouse */
+@media (hover: hover) {
+    .back-to-top:hover {
+        transform: translateY(-5px);
+        background-color: var(--secundario); /* Cambia a tu azulito suave */
+        color: white;
     }
 }
