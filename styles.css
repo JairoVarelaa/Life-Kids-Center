@@ -494,7 +494,113 @@ input, textarea { width: 100%; padding: 15px; font-size: 16px; border-radius: 15
     position: relative;
     overflow: hidden; /* Para que nada se salga del botón */
 }
+/* =========================================
+   NUESTRA ESENCIA: HISTORIA, CURRÍCULO, ABP (GLASSMORPHISM)
+========================================= */
+.essence-section {
+    background-color: var(--fondo);
+    padding: 100px 5%;
+    position: relative;
+    overflow: hidden;
+}
 
+/* Círculos de fondo para dar un ambiente futurista/suave */
+.essence-section::before, .essence-section::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 0;
+    opacity: 0.4;
+}
+.essence-section::before {
+    width: 400px; height: 400px;
+    background: var(--secundario);
+    top: 10%; left: -100px;
+}
+.essence-section::after {
+    width: 300px; height: 300px;
+    background: var(--primario);
+    bottom: 20%; right: -50px;
+}
+
+.essence-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 120px; /* Mucho espacio para respirar */
+    position: relative;
+    z-index: 2;
+}
+
+.essence-block {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+}
+.essence-block.reverse {
+    flex-direction: row-reverse;
+}
+
+.essence-img {
+    flex: 1;
+    position: relative;
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    transform: translateY(0);
+    transition: transform 0.6s ease;
+}
+.essence-img img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+}
+.essence-block:hover .essence-img {
+    transform: translateY(-10px); /* Flotación suave al pasar el mouse */
+}
+
+/* El efecto futurista "Cristal" */
+.glass-card {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.75); /* Blanco semi-transparente */
+    backdrop-filter: blur(16px); /* Desenfoca lo que hay detrás */
+    -webkit-backdrop-filter: blur(16px); /* Soporte para Safari */
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Borde de cristal */
+    padding: 50px;
+    border-radius: 30px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    margin-left: -80px; /* Se superpone a la imagen a la izquierda */
+    transition: all 0.4s ease;
+}
+.essence-block.reverse .glass-card {
+    margin-left: 0;
+    margin-right: -80px; /* Se superpone a la imagen a la derecha */
+}
+
+.glass-card:hover {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+.glass-card h3 {
+    color: var(--primario);
+    font-size: 2rem;
+    margin: 10px 0 20px;
+}
+.glass-card p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 15px;
+    color: var(--texto);
+}
+.glass-card p strong {
+    color: var(--verde-reggio); /* Destacamos las palabras clave en verde */
+}
 /* 2. EFECTO PC (HOVER): El botón "flota" hacia arriba */
 /* Usamos @media (hover: hover) para que este efecto SOLO pase si hay mouse.
    Así evitamos que en el celular el botón se quede "pegado" con el color cambiado. */
@@ -740,6 +846,18 @@ input:focus, textarea:focus {
         flex-direction: column; /* En móvil, la foto de la familia se mostrará arriba del texto */
         padding: 30px 20px;
         text-align: center;
+    }
+    .essence-block, .essence-block.reverse {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .glass-card, .essence-block.reverse .glass-card {
+        margin: -50px 20px 0 20px; /* Se superpone hacia arriba sobre la foto */
+        padding: 30px 20px;
+        text-align: center;
+    }
+    .essence-container {
+        gap: 80px; /* Reducimos el espacio entre bloques en móvil */
     }
 }
 /* AJUSTE ESPECÍFICO PARA MÓVIL */
