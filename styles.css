@@ -195,12 +195,141 @@ section { padding: 80px 5%; min-height: auto; width: 100%; }
     border-radius: 50%; cursor: pointer; z-index: 10;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1); color: var(--primario); font-size: 20px;
 }
+/* --- JARDÍN EXTENDIDO --- */
+.extended-section {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.extended-content { flex: 1.2; }
+.extended-content h2 { color: var(--verde-reggio); font-size: 2.2rem; margin-bottom: 10px; }
+.extended-content p { margin-top: 20px; font-size: 1.1rem; line-height: 1.6; }
+
+.places-list { list-style: none; margin-top: 20px; }
+.places-list li { margin-bottom: 15px; font-size: 1.05rem; position: relative; padding-left: 25px; }
+.places-list li::before { content: "🌿"; position: absolute; left: 0; top: 2px; }
+
+/* --- JARDÍN EXTENDIDO: GALERÍA FLOTANTE FUTURISTA Y SUAVE --- */
+.extended-gallery, .community-gallery {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 420px; /* Espacio controlado para que las fotos floten libremente */
+    position: relative;
+}
+
+.gallery-stack {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+}
+
+.stack-img {
+    position: absolute;
+    width: 85%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    background: var(--blanco, #FFFFFF);
+    padding: 8px; /* Crea un marco elegante alrededor de la foto real */
+    
+    /* Transición elástica ultra suave */
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    cursor: pointer;
+}
+
+/* 1. Posiciones iniciales superpuestas y ligeramente rotadas */
+.img-1 {
+    top: 0;
+    left: 0;
+    --rot-base: -4deg;
+    transform: rotate(var(--rot-base));
+    z-index: 1;
+    animation: floatOrganic 6s ease-in-out infinite;
+}
+
+.img-2 {
+    top: 30px;
+    left: 40px;
+    --rot-base: 3deg;
+    transform: rotate(var(--rot-base));
+    z-index: 2;
+    animation: floatOrganic 6s ease-in-out infinite 1.5s; /* Desfase de tiempo para que no se muevan igual */
+}
+
+.img-3 {
+    top: 60px;
+    left: 15px;
+    --rot-base: -2deg;
+    transform: rotate(var(--rot-base));
+    z-index: 3;
+    animation: floatOrganic 6s ease-in-out infinite 3s; /* Desfase de tiempo */
+}
+
+/* 2. Animación de flotado suave (Evoca naturaleza y tranquilidad) */
+@keyframes floatOrganic {
+    0%, 100% { 
+        transform: translateY(0) rotate(var(--rot-base)); 
+    }
+    50% { 
+        transform: translateY(-12px) rotate(calc(var(--rot-base) + 1deg)); 
+    }
+}
+
+/* 3. INTERACCIÓN (Efecto Futurista): Al pasar el mouse sobre una foto */
+.stack-img:hover {
+    transform: scale(1.12) rotate(0deg) translateY(-15px) !important;
+    z-index: 100; /* Se posiciona por encima de absolutamente todo */
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    animation-play-state: paused; /* Detiene el balanceo mientras la miras */
+}
+
+/* 4. Efecto de enfoque: Las fotos que NO tienen el mouse encima se desvanecen y desenfocan */
+.gallery-stack:hover .stack-img:not(:hover) {
+    opacity: 0.4;
+    filter: blur(4px) grayscale(10%);
+    transform: scale(0.92);
+}
+/* --- COMUNIDAD REDISEÑADA (Foto a la izquierda dentro de un contenedor armónico) --- */
+.community-section {
+    background-color: var(--verde-reggio); /* El fondo verde abraza la sección */
+    padding: 80px 5%;
+    margin-top: 40px;
+}
+.community-container {
+    background: var(--fondo); /* La tarjeta interna usa el fondo crema de la web */
+    padding: 50px;
+    border-radius: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+.community-image {
+    flex: 1;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+.community-image img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+
+.community-content { flex: 1.2; }
+.community-content h2 { color: var(--primario); font-size: 2.2rem; margin-bottom: 10px; }
+.community-content p { font-size: 1.1rem; line-height: 1.7; margin-top: 15px; color: var(--texto); }
+/* ---SECCION CONTACTO--- */
 .contact-section {
     background-color: var(--verde-reggio); /* Tu color gr-098 */
     padding: 80px 5%;
     display: flex;
     justify-content: center;
-    border-radius: 50px 50px 0 0; /* Curva superior para suavizar la transición */
+    /*.back-to-top: 50px 50px 0 0; Curva superior para suavizar la transición */
 }
 
 .contact-container {
@@ -277,6 +406,18 @@ section { padding: 80px 5%; min-height: auto; width: 100%; }
 @media (max-width: 768px) {
     .map-card {
         max-width: 100%;
+    }
+    .extended-gallery, .community-gallery {
+        width: 100%;
+        min-height: 360px; /* Ajusta la altura en móvil */
+        margin-top: 30px;
+    }
+    .gallery-stack {
+        max-width: 290px; /* Reducimos el tamaño para pantallas pequeñas */
+        height: 220px;
+    }
+    .stack-img {
+        width: 90%;
     }
 }
 .footer-jardin {
@@ -587,6 +728,19 @@ input:focus, textarea:focus {
     .nav-links { display: none; }
     .rhythm-card, .rhythm-card.reverse { flex-direction: column; text-align: center; }
     .carousel-btn { display: none; } /* En móvil se usa el dedo */
+    /* Ajustes responsive para las nuevas secciones */
+    .extended-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    .places-list li {
+        text-align: left; /* Mantiene la lista de museos alineada y fácil de leer */
+    }
+    .community-container {
+        flex-direction: column; /* En móvil, la foto de la familia se mostrará arriba del texto */
+        padding: 30px 20px;
+        text-align: center;
+    }
 }
 /* AJUSTE ESPECÍFICO PARA MÓVIL */
 @media (max-width: 480px) {
